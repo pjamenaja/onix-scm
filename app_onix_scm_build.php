@@ -51,7 +51,7 @@ function CreateCoreBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_core_framework.git',
                            'master',
-                           '1.0.12');
+                           '1.0.13');
 
     $modules = [];
     $m1 = CreateModule('onix_core_framework.phar', 'lib_wis_core_framework/build', 'system/bin');
@@ -65,7 +65,7 @@ function CreateErpBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_erp_framework.git',
                            'master',
-                           '1.0.2');
+                           '1.0.3');
 
     $modules = [];
     $m1 = CreateModule('onix_erp_framework.phar', 'lib_wis_erp_framework/build', 'system/bin');
@@ -77,38 +77,38 @@ function CreateErpBuildSpec()
 
 function CreateAppBuildSpec()
 {
-    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/onix.git',
+    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/app_onix.git',
                            'master',
                            ''); //Get latest
 //ONIX_1.0.3
 
     $modules = [];
 
-    $m1 = CreateModule('config.php', 'onix/onix_server/scripts', 'system/bin');
+    $m1 = CreateModule('config.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m1);
 
-    $m2 = CreateModule('dispatcher.php', 'onix/onix_server/scripts', 'system/bin');
+    $m2 = CreateModule('dispatcher.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m2);
 
-    $m3 = CreateModule('downloader.php', 'onix/onix_server/scripts', 'system/bin');
+    $m3 = CreateModule('downloader.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m3);
 
-    $m4 = CreateModule('file.php', 'onix/onix_server/scripts', 'system/bin');
+    $m4 = CreateModule('file.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4);
 
-    $m4_1 = CreateModule('build.php', 'onix/onix_server/scripts', 'system/bin');
+    $m4_1 = CreateModule('build.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4_1);
 
-    $m5 = CreateModule('OnixCenter.zip', 'onix', 'windows');
+    $m5 = CreateModule('OnixCenter.zip', 'app_onix', 'windows');
     array_push($modules, $m5);
 
-    $m6 = CreateModule('OnixPOS.zip', 'onix', 'windows');
+    $m6 = CreateModule('OnixPOS.zip', 'app_onix', 'windows');
     array_push($modules, $m6);
 
     $bs1->AddChildArray('MODULES', $modules);    
 
     $scripts = [];
-    $s1 = CreateScript('php ./onix/onix.build.php');
+    $s1 = CreateScript('php ./app_onix/onix.build.php');
     array_push($scripts, $s1);
     $bs1->AddChildArray('SCRIPTS', $scripts);  
 
