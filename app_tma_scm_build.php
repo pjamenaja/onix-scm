@@ -51,7 +51,7 @@ function CreateCoreBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_core_framework.git',
                            'master',
-                           '1.0.13');
+                           '1.0.14');
 
     $modules = [];
     $m1 = CreateModule('onix_core_framework.phar', 'lib_wis_core_framework/build', 'system/bin');
