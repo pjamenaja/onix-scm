@@ -84,24 +84,27 @@ function CreateAppBuildSpec()
 
     $modules = [];
 
-    $m1 = CreateModule('config.php', 'app_tma/tma_server/api', 'system/bin');
+    $m1 = CreateModule('config.php', 'app_tma/tma_server', 'system/bin');
     array_push($modules, $m1);
 
-    $m2 = CreateModule('dispatcher.php', 'app_tma/tma_server/api', 'system/bin');
+    $m2 = CreateModule('dispatcher.php', 'app_tma/tma_server', 'system/bin');
     array_push($modules, $m2);
 
-    $m3 = CreateModule('downloader.php', 'app_tma/tma_server/api', 'system/bin');
+    $m3 = CreateModule('downloader.php', 'app_tma/tma_server', 'system/bin');
     array_push($modules, $m3);
 
-    $m4 = CreateModule('file.php', 'app_tma/tma_server/api', 'system/bin');
+    $m4 = CreateModule('file.php', 'app_tma/tma_server', 'system/bin');
     array_push($modules, $m4);
 
-    $m4_1 = CreateModule('build.php', 'app_tma/tma_server/api', 'system/bin');
+    $m4_1 = CreateModule('build.php', 'app_tma/tma_server', 'system/bin');
     array_push($modules, $m4_1);
 
-    $m5 = CreateModule('app.php', 'app_tma/tma_server/web', 'system/bin');
+    $m5 = CreateModule('app.php', 'app_tma/tma_server', 'system/bin');
     array_push($modules, $m5);
 
+    $m6 = CreateModule('web.phar', 'app_tma/tma_server/build', 'system/bin');
+    array_push($modules, $m6);
+    
     $bs1->AddChildArray('MODULES', $modules);    
 
     //$scripts = [];
