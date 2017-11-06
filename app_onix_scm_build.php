@@ -51,7 +51,7 @@ function CreateCoreBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_core_framework.git',
                            'master',
-                           '1.0.14');
+                           ''); //Get latest 
 
     $modules = [];
     $m1 = CreateModule('onix_core_framework.phar', 'lib_wis_core_framework/build', 'system/bin');
@@ -65,7 +65,7 @@ function CreateErpBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_erp_framework.git',
                            'master',
-                           '1.0.3');
+                           ''); //Get latest 
 
     $modules = [];
     $m1 = CreateModule('onix_erp_framework.phar', 'lib_wis_erp_framework/build', 'system/bin');
