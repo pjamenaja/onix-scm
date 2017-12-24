@@ -8,7 +8,7 @@ require_once "phar://wis_scm_framework.phar/controllers/Environment/Environment.
 require_once "phar://onix_core_framework.phar/CTable.php";
 
 #Initialize('onix', 'dev', 'wis', 'framework');
-Initialize('onix', 'uat', 'nap', 'napbiotech');
+Initialize('onix', 'uat', 'erice', 'erice');
 
 exit(0);
 
@@ -26,6 +26,7 @@ function Initialize($prod, $stage, $client, $system)
     $f->SetFieldValue('IS_ADMIN', 'Y');
     $f->SetFieldValue('IS_ENABLE', 'Y');
 
+    Environment::PatchDatabase(null, new CTable(''), $f);
     Environment::InitializeUserData(null, new CTable(''), $f);
 }
 
