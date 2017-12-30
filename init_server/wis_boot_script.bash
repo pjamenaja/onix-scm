@@ -25,6 +25,9 @@ chown ${USER}:${USER} ${KEY_FILE}
 chmod 600 ${KEY_FILE}
 rm ${TEMP_PUB_FILE}
 
+rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+
 yum install php71w-fpm php71w-opcache
 yum install php71w-common
 yum install php71w-cli
