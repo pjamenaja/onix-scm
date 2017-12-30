@@ -42,10 +42,12 @@ $PGSQL_COMMAND_LISTS_10_0 = [
 $GENERIC_COMMAND_LISTS_1_0 = [
                     'mkdir /wis',
                     'chmod 777 /wis',
-                    'service httpd restart',
-                    'service postgresql-10 restart'
+                    'systemctl enable httpd.service',
+                    'systemctl start httpd.service',
+                    'systemctl enable postgresql-10',
+                    'systemctl start postgresql-10'
                 ];
-
+                                
 $PGSQL_HBA_CONFIG = 
             [                
                     ['local',   'all',         'all',  '',             'trust'],
