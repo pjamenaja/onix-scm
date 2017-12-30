@@ -371,7 +371,7 @@ IncludeOptional conf.d/*.conf
 
 #Listen 443
 <VirtualHost *:443>
-    ServerName ${WIS_IP}
+    ServerName ${WIS_IP_ADDR}
     SSLEngine on
     SSLCertificateFile "${WIS_CERT_FILE}"
     SSLCertificateKeyFile "${WIS_KEY_FILE}"

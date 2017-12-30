@@ -8,8 +8,9 @@ declare(strict_types=1);
 $_ENV['BIN_DIR'] = dirname(__FILE__);
 $_ENV['WIS_KEY_FILE'] = getenv('WIS_KEY_FILE');
 $_ENV['WIS_CERT_FILE'] = getenv('WIS_CERT_FILE');
+$_ENV['WIS_IP_ADDR'] = getenv('WIS_IP_ADDR');
 
-$PHP_COMMAND_LISTS_7_1 = [
+$PHP_COMMAND_LISTS_7_1 = [   
                      'rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
                      'rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm',
                      'yum install mod_php71w php71w-opcache',
@@ -26,7 +27,7 @@ $APACHE_COMMAND_LISTS_2_4 = [
                     'yum install mod_ssl',                    
                     'mkdir /etc/httpd/ssl',
                     "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $_ENV[WIS_KEY_FILE] -out $_ENV[WIS_CERT_FILE]",      
-                    'apache_func_call(httpd.conf_2.4)',
+                    'apache_func_call(./httpd.conf_2.4|/etc/httpd/conf/httpd.conf)',
                     'echo HelloWorld > /var/www/html/index.html',
                 ];
 
@@ -35,7 +36,7 @@ $PGSQL_COMMAND_LISTS_10_0 = [
                     'yum install postgresql10',
                     'yum install postgresql10-server',
                     '/usr/pgsql-10/bin/postgresql-10-setup initdb',
-                    'pgsql_func_call(pg_hba.conf_10.0)',                    
+                    'pgsql_func_call(/var/lib/pgsql/10/data/pg_hba.conf)',                    
                 ];
 
 $GENERIC_COMMAND_LISTS_1_0 = [
@@ -43,7 +44,17 @@ $GENERIC_COMMAND_LISTS_1_0 = [
                     'chmod 777 /wis',                                        
                 ];
 
-$PROFILE=[$PHP_COMMAND_LISTS_7_1, $APACHE_COMMAND_LISTS_2_4, $PGSQL_COMMAND_LISTS_10_0, $GENERIC_COMMAND_LISTS_1_0];
+$PGSQL_HBA_CONFIG = 
+            [                
+                    ['local',   'all',         'all',  '',             'trust'],
+                    ['host' ,   'all',         'all',  '127.0.0.1/32', 'trust'],
+                    ['host' ,   'all',         'all',  '::1/128',      'trust'],
+                    ['local',   'replication', 'all',  '',             'peer' ],
+                    ['host',    'replication', 'all',  '127.0.0.1/32', 'ident'],
+                    ['host',    'replication', 'all',  '::1/128',      'ident'],
+            ];
+
+$PROFILE=[$PHP_COMMAND_LISTS_7_1, $PGSQL_COMMAND_LISTS_10_0, $APACHE_COMMAND_LISTS_2_4, $GENERIC_COMMAND_LISTS_1_0];
 
 runCommands($PROFILE);
 exit(0);
@@ -64,11 +75,13 @@ function runCommands($profiles)
                 print("Calling function [$func_key] with param [$param]\n");
                 if ($func_key == 'apache')
                 {
-                    configSslApache($param);
+                    list($template, $output) = explode ('|', $param);
+                    configSslApache($template, $output);
                 }
                 else if ($func_key == 'pgsql')
                 {
-                    configPostgreSQL($param);
+                    global $PGSQL_HBA_CONFIG;
+                    configPostgreSQL($param, $PGSQL_HBA_CONFIG);
                 }                
             }
             else
@@ -84,14 +97,49 @@ function configSELinux()
     print("==== Configuring SELinux ...\n");
 }
 
-function configPostgreSQL($template)
+function configPostgreSQL($fname, $arr)
 {
     print("==== Configuring PostgreSQL ...\n");
+
+    $buffer = '';
+
+    foreach($arr as $cfg)
+    {
+        list($type, $db, $user, $address, $action) = $cfg;
+        $row = sprintf("%s    %s    %s    %s     %s\n", str_pad($type, 12), str_pad($db, 12),
+            str_pad($user, 12), str_pad($address, 12), str_pad($action, 12));
+
+        $buffer = $buffer . $row;        
+    }
+
+    file_put_contents($fname, $buffer);
 }
 
-function configSslApache()
+function configSslApache($template, $output)
 {
     print("==== Configuring SSL ...\n");
+
+    $fh = fopen($template, "r");
+    $oh = fopen($output, 'w');
+
+    while ($line = fgets($fh)) 
+    {
+        $newStr = $line;
+
+        foreach ($_ENV as $name => $value)
+        {
+            if (preg_match('/^WIS_.*$/', $name))
+            {
+                $var = '${' . $name . '}';
+                $newStr = str_replace($var, $value, $newStr); 
+            }
+        }
+
+        fwrite($oh, $newStr);
+    }
+
+    fclose($fh);
+    fclose($oh);
 }
 
 ?>
