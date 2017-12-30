@@ -13,18 +13,18 @@ $_ENV['WIS_IP_ADDR'] = getenv('WIS_IP_ADDR');
 $PHP_COMMAND_LISTS_7_1 = [   
                      'rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
                      'rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm',
-                     'yum install mod_php71w php71w-opcache',
-                     'yum install php71w-pdo',
-                     'yum install php71w-pgsql',
-                     'yum install php71w-xml',
-                     'yum install php71w-fpm php71w-opcache',
-                     'yum install php71w-common',
-                     'yum install php71w-cli',
+                     'yum -y install mod_php71w php71w-opcache',
+                     'yum -y install php71w-pdo',
+                     'yum -y install php71w-pgsql',
+                     'yum -y install php71w-xml',
+                     'yum -y install php71w-fpm php71w-opcache',
+                     'yum -y install php71w-common',
+                     'yum -y install php71w-cli',
                 ];
 
 $APACHE_COMMAND_LISTS_2_4 = [
-                    'yum install httpd',
-                    'yum install mod_ssl',                    
+                    'yum -y install httpd',
+                    'yum -y install mod_ssl',                    
                     'mkdir /etc/httpd/ssl',
                     "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $_ENV[WIS_KEY_FILE] -out $_ENV[WIS_CERT_FILE]",      
                     'apache_func_call(./httpd.conf_2.4|/etc/httpd/conf/httpd.conf)',
@@ -41,7 +41,9 @@ $PGSQL_COMMAND_LISTS_10_0 = [
 
 $GENERIC_COMMAND_LISTS_1_0 = [
                     'mkdir /wis',
-                    'chmod 777 /wis',                                        
+                    'chmod 777 /wis',
+                    'service httpd restart',
+                    'service postgresql-10 restart'
                 ];
 
 $PGSQL_HBA_CONFIG = 
