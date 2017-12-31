@@ -32,9 +32,9 @@ $APACHE_COMMAND_LISTS_2_4 = [
                 ];
 
 $PGSQL_COMMAND_LISTS_10_0 = [
-                    'yum install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-redhat10-10-1.noarch.rpm',
-                    'yum install postgresql10',
-                    'yum install postgresql10-server',
+                    'yum -y install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-redhat10-10-1.noarch.rpm',
+                    'yum -y install postgresql10',
+                    'yum -y install postgresql10-server',
                     '/usr/pgsql-10/bin/postgresql-10-setup initdb',
                     'pgsql_func_call(/var/lib/pgsql/10/data/pg_hba.conf)',                    
                 ];
