@@ -13,7 +13,7 @@ $_ENV['WIS_IP_ADDR'] = getenv('WIS_IP_ADDR');
 $PHP_COMMAND_LISTS_7_1 = [   
                      'rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
                      'rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm',
-                     'yum -y install mod_php71w php71w-opcache',
+                     'yum -y install mod_php71w',
                      'yum -y install php71w-pdo',
                      'yum -y install php71w-pgsql',
                      'yum -y install php71w-xml',
