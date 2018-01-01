@@ -20,16 +20,17 @@ $PHP_COMMAND_LISTS_7_1 = [
                      'yum -y install php71w-pdo',
                      'yum -y install php71w-pgsql',
                      'yum -y install php71w-xml',
-                     'yum -y install php71w-fpm php71w-opcache',
                      'yum -y install php71w-common',
                      'yum -y install php71w-cli',
                 ];
+
+$SUBJ='-subj "/C=TH/ST=Bangkok/L=Dindang/O=Wintech Thai/OU=COM/CN=www.wintechthai.com"';
 
 $APACHE_COMMAND_LISTS_2_4 = [
                     'yum -y install httpd',
                     'yum -y install mod_ssl',                    
                     'mkdir /etc/httpd/ssl',
-                    "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $_ENV[WIS_KEY_FILE] -out $_ENV[WIS_CERT_FILE]",      
+                    "openssl req $SUBJ -x509 -nodes -days 365 -newkey rsa:2048 -keyout $_ENV[WIS_KEY_FILE] -out $_ENV[WIS_CERT_FILE]",      
                     'apache_func_call(./httpd.conf_2.4|/etc/httpd/conf/httpd.conf)',
                     'echo HelloWorld > /var/www/html/index.html',
                 ];
