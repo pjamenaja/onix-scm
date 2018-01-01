@@ -11,6 +11,7 @@ PUB_KEY='ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAqO1jMSJtkzsSrah9QDJD+QHqwXLNCf8C0+J
 export WIS_KEY_FILE=/etc/httpd/ssl/${COMPANY}.key
 export WIS_CERT_FILE=/etc/httpd/ssl/${COMPANY}.crt
 export WIS_IP_ADDR=${IP}
+export WIS_USER=${USER}
 
 useradd ${USER}
 passwd ${USER}

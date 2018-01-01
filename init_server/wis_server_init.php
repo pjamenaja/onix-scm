@@ -5,10 +5,13 @@
 
 declare(strict_types=1);
 
+$SUDOERS_FILE='/etc/sudoers';
+
 $_ENV['BIN_DIR'] = dirname(__FILE__);
 $_ENV['WIS_KEY_FILE'] = getenv('WIS_KEY_FILE');
 $_ENV['WIS_CERT_FILE'] = getenv('WIS_CERT_FILE');
 $_ENV['WIS_IP_ADDR'] = getenv('WIS_IP_ADDR');
+$_ENV['WIS_USER'] = getenv('WIS_USER');
 
 $PHP_COMMAND_LISTS_7_1 = [   
                      'rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
@@ -45,7 +48,12 @@ $GENERIC_COMMAND_LISTS_1_0 = [
                     'systemctl enable httpd.service',
                     'systemctl start httpd.service',
                     'systemctl enable postgresql-10',
-                    'systemctl start postgresql-10'
+                    'systemctl start postgresql-10',
+                    'setsebool -P httpd_can_network_connect=1',
+                    "chmod 600 $SUDOERS_FILE",
+                    "echo '$_ENV[WIS_USER] ALL=(ALL) NOPASSWD: /usr/sbin/semanage' >> $SUDOERS_FILE ",
+                    "echo '$_ENV[WIS_USER] ALL=(ALL) NOPASSWD: /usr/sbin/restorecon' >> $SUDOERS_FILE ",
+                    "chmod 400 $SUDOERS_FILE",
                 ];
                                 
 $PGSQL_HBA_CONFIG = 
@@ -86,7 +94,7 @@ function runCommands($profiles)
                 {
                     global $PGSQL_HBA_CONFIG;
                     configPostgreSQL($param, $PGSQL_HBA_CONFIG);
-                }                
+                }                               
             }
             else
             {
@@ -96,9 +104,9 @@ function runCommands($profiles)
     }    
 }
 
-function configSELinux()
+function configSudoers()
 {
-    print("==== Configuring SELinux ...\n");
+    print("==== Configuring Sudoers ...\n");
 }
 
 function configPostgreSQL($fname, $arr)
@@ -113,7 +121,7 @@ function configPostgreSQL($fname, $arr)
         $row = sprintf("%s    %s    %s    %s     %s\n", str_pad($type, 12), str_pad($db, 12),
             str_pad($user, 12), str_pad($address, 12), str_pad($action, 12));
 
-        $buffer = $buffer . $row;        
+        $buffer = $buffer . $row;
     }
 
     file_put_contents($fname, $buffer);
