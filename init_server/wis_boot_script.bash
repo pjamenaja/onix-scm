@@ -32,5 +32,6 @@ rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 #yum install php71w-fpm
 yum install php71w-common
 yum install php71w-cli
+yum -y install php71w-pdo
 
 php wis_server_init.php
