@@ -61,6 +61,20 @@ function CreateCoreBuildSpec()
     return($bs1);
 }
 
+function CreateFrameWorkBuildSpec()
+{
+    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_scm_framework.git',
+                           'master',
+                           ''); //Get latest 
+
+    $modules = [];
+    $m1 = CreateModule('wis_scm_framework.phar', 'lib_wis_scm_framework/build', 'system/bin');
+    array_push($modules, $m1);
+
+    $bs1->AddChildArray('MODULES', $modules);   
+    return($bs1);
+}
+
 function CreateAppBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/app_wtt_scm.git',
@@ -103,6 +117,9 @@ function CreateBuildProfile()
     
     $bs1 = CreateCoreBuildSpec();
     array_push($bspecs, $bs1);
+
+    $bs2 = CreateFrameWorkBuildSpec();
+    array_push($bspecs, $bs2);
 
     $bs3 = CreateAppBuildSpec();
     array_push($bspecs, $bs3);
