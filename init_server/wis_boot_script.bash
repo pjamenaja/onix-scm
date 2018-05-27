@@ -30,9 +30,9 @@ rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
 #yum install php71w-fpm --- NO NEED 
-yum install php71w-common
-yum install php71w-cli
-yum -y install php71w-pdo
-yum install php71w-mbstring
+yum install php72w-common
+yum install php72w-cli
+yum -y install php72w-pdo
+yum install php72w-mbstring
 
 php wis_server_init.php
