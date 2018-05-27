@@ -16,12 +16,13 @@ $_ENV['WIS_USER'] = getenv('WIS_USER');
 $PHP_COMMAND_LISTS_7_1 = [   
                      'rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
                      'rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm',
-                     'yum -y install mod_php71w',
-                     'yum -y install php71w-pdo',
-                     'yum -y install php71w-pgsql',
-                     'yum -y install php71w-xml',
-                     'yum -y install php71w-common',
-                     'yum -y install php71w-cli',
+                     'yum -y install mod_php72w',
+                     'yum -y install php72w-pdo',
+                     'yum -y install php72w-pgsql',
+                     'yum -y install php72w-xml',
+                     'yum -y install php72w-common',
+                     'yum -y install php72w-gd',
+                     'yum -y install php72w-cli',
                 ];
 
 $SUBJ='-subj "/C=TH/ST=Bangkok/L=Dindang/O=Wintech Thai/OU=COM/CN=www.wintechthai.com"';
