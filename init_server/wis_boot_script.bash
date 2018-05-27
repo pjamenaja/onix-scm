@@ -35,5 +35,6 @@ yum install php72w-cli
 yum -y install php72w-pdo
 yum install php72w-mbstring
 yum install php72w-gd
+yum install wget
 
 php wis_server_init.php
