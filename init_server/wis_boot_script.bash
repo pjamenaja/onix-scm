@@ -29,12 +29,16 @@ rm ${TEMP_PUB_FILE}
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
-#yum install php71w-fpm --- NO NEED 
+#yum install php72w-fpm --- NO NEED 
 yum install php72w-common
 yum install php72w-cli
 yum -y install php72w-pdo
 yum install php72w-mbstring
 yum install php72w-gd
 yum install wget
+
+cd /tmp
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
 
 php wis_server_init.php
