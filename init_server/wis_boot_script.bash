@@ -37,9 +37,7 @@ yum install php72w-mbstring
 yum install php72w-gd
 yum install wget
 
-cd /tmp
+php wis_server_init.php
+
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
-
-cd -
-php wis_server_init.php
