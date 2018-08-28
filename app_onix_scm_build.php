@@ -99,6 +99,9 @@ function CreateAppBuildSpec()
     $m4_1 = CreateModule('build.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4_1);
 
+    $m4_2 = CreateModule('init_script.bash', 'app_onix/onix_server/scripts', 'system/bin');
+    array_push($modules, $m4_2);
+
     $m5 = CreateModule('OnixCenter.zip', 'app_onix', 'windows');
     array_push($modules, $m5);
 
