@@ -61,14 +61,14 @@ function CreateCoreBuildSpec()
     return($bs1);
 }
 
-function CreateFrameWorkBuildSpec()
+function CreateErpBuildSpec()
 {
-    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_scm_framework.git',
+    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_erp_framework.git',
                            'master',
                            ''); //Get latest 
 
     $modules = [];
-    $m1 = CreateModule('wis_scm_framework.phar', 'lib_wis_scm_framework/build', 'system/bin');
+    $m1 = CreateModule('onix_erp_framework.phar', 'lib_wis_erp_framework/build', 'system/bin');
     array_push($modules, $m1);
 
     $bs1->AddChildArray('MODULES', $modules);   
@@ -77,31 +77,41 @@ function CreateFrameWorkBuildSpec()
 
 function CreateAppBuildSpec()
 {
-    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/app_wtt_scm.git',
+    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/app_onix.git',
                            'master',
                            ''); //Get latest
+//ONIX_1.0.3
 
     $modules = [];
 
-    $m1 = CreateModule('config.php', 'app_wtt_scm/wtt_scm_server', 'system/bin');
+    $m1 = CreateModule('config.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m1);
 
-    $m2 = CreateModule('dispatcher.php', 'app_wtt_scm/wtt_scm_server', 'system/bin');
+    $m2 = CreateModule('dispatcher.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m2);
 
-    $m3 = CreateModule('downloader.php', 'app_wtt_scm/wtt_scm_server', 'system/bin');
+    $m3 = CreateModule('downloader.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m3);
 
-    $m4 = CreateModule('events_entry.php', 'app_wtt_scm/wtt_scm_server', 'system/bin');
+    $m4 = CreateModule('file.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4);
 
-    $m4_1 = CreateModule('build.php', 'app_wtt_scm/wtt_scm_server', 'system/bin');
+    $m4_1 = CreateModule('build.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4_1);
+
+    $m4_2 = CreateModule('init_script.bash', 'app_onix/onix_server/scripts', 'system/bin');
+    array_push($modules, $m4_2);
+
+    $m5 = CreateModule('OnixCenter.zip', 'app_onix', 'windows');
+    array_push($modules, $m5);
+
+    $m6 = CreateModule('OnixPOS.zip', 'app_onix', 'windows');
+    array_push($modules, $m6);
 
     $bs1->AddChildArray('MODULES', $modules);    
 
     $scripts = [];
-    $s1 = CreateScript('php ./app_wtt_scm/wtt_scm.build.php');
+    $s1 = CreateScript('php ./app_onix/onix.build.php sass');
     array_push($scripts, $s1);
     $bs1->AddChildArray('SCRIPTS', $scripts);  
 
@@ -111,14 +121,14 @@ function CreateAppBuildSpec()
 function CreateBuildProfile()
 {
     $bp = new CTable("BUILD_PROFILE");
-    $bp->SetFieldValue('APP_VERSION_LABEL', 'WTT_SCM_1.0.1');
+    $bp->SetFieldValue('APP_VERSION_LABEL', 'WTT_SASS_1.0.1');
 
     $bspecs = [];
     
     $bs1 = CreateCoreBuildSpec();
     array_push($bspecs, $bs1);
 
-    $bs2 = CreateFrameWorkBuildSpec();
+    $bs2 = CreateErpBuildSpec();
     array_push($bspecs, $bs2);
 
     $bs3 = CreateAppBuildSpec();

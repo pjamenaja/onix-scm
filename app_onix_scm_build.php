@@ -111,7 +111,7 @@ function CreateAppBuildSpec()
     $bs1->AddChildArray('MODULES', $modules);    
 
     $scripts = [];
-    $s1 = CreateScript('php ./app_onix/onix.build.php');
+    $s1 = CreateScript('php ./app_onix/onix.build.php onix');
     array_push($scripts, $s1);
     $bs1->AddChildArray('SCRIPTS', $scripts);  
 
