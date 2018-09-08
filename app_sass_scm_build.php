@@ -61,6 +61,20 @@ function CreateCoreBuildSpec()
     return($bs1);
 }
 
+function CreateSassBuildSpec()
+{
+    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_sass_framework.git',
+                           'master',
+                           ''); //Get latest 
+
+    $modules = [];
+    $m1 = CreateModule('wis_sass_framework.phar', 'lib_wis_sass_framework/build', 'system/bin');
+    array_push($modules, $m1);
+
+    $bs1->AddChildArray('MODULES', $modules);   
+    return($bs1);
+}
+
 function CreateErpBuildSpec()
 {
     $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_erp_framework.git',
@@ -127,6 +141,9 @@ function CreateBuildProfile()
     
     $bs1 = CreateCoreBuildSpec();
     array_push($bspecs, $bs1);
+
+    $bs1_1 = CreateSassBuildSpec();
+    array_push($bspecs, $bs1_1);
 
     $bs2 = CreateErpBuildSpec();
     array_push($bspecs, $bs2);
