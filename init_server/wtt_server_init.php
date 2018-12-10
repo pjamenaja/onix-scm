@@ -23,6 +23,7 @@ $PHP_COMMAND_LISTS_7_1 = [
                      'yum -y install php72w-common',
                      'yum -y install php72w-gd',
                      'yum -y install php72w-cli',
+                     'echo "extension=rdkafka.so" > /etc/php.d/rdkafka.ini',
                 ];
 
 $SUBJ='-subj "/C=TH/ST=Bangkok/L=Dindang/O=Wintech Thai/OU=COM/CN=www.wintechthai.com"';
@@ -33,7 +34,7 @@ $APACHE_COMMAND_LISTS_2_4 = [
                     'mkdir /etc/httpd/ssl',
                     "openssl req $SUBJ -x509 -nodes -days 365 -newkey rsa:2048 -keyout $_ENV[WIS_KEY_FILE] -out $_ENV[WIS_CERT_FILE]",      
                     'apache_func_call(./httpd.conf_2.4|/etc/httpd/conf/httpd.conf)',
-                    'echo HelloWorld > /var/www/html/index.html',
+                    'echo "<?php phpinfo();" > /var/www/html/index.php',
                 ];
 
 $PGSQL_COMMAND_LISTS_10_0 = [

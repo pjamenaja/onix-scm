@@ -39,7 +39,9 @@ pecl install rdkafka
 
 cd ..
 
-#php wtt_server_init.php
+cd scm/init_server
+
+php wtt_server_init.php
 
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
