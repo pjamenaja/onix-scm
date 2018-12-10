@@ -22,7 +22,22 @@ yum -y install php72w-cli
 yum -y install php72w-pdo
 yum -y install php72w-mbstring
 yum -y install php72w-gd
+yum -y install php72w-pear #need for pecl - php extension community lib
+yum -y install php72w-devel #php header, need to compile extension
 yum -y install wget
+yum -y group install "Development Tools"
+
+cd ../..
+git clone https://github.com/edenhill/librdkafka.git
+cd librdkafka
+./configure; make; make install
+
+cd ..
+git clone https://github.com/arnaud-lb/php-rdkafka.git 
+cd php-rdkafka
+pecl install rdkafka
+
+cd ..
 
 #php wtt_server_init.php
 
