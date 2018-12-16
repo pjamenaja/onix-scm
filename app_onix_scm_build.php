@@ -93,9 +93,6 @@ function CreateAppBuildSpec()
     $m3 = CreateModule('downloader.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m3);
 
-    //$m4 = CreateModule('file.php', 'app_onix/onix_server/scripts', 'system/bin');
-    //array_push($modules, $m4);
-
     $ma_1 = CreateModule('content.php', 'app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $ma_1);
 
@@ -110,9 +107,6 @@ function CreateAppBuildSpec()
 
     $m5 = CreateModule('OnixCenter.zip', 'app_onix', 'windows');
     array_push($modules, $m5);
-
-    $m6 = CreateModule('OnixPOS.zip', 'app_onix', 'windows');
-    array_push($modules, $m6);
 
     $bs1->AddChildArray('MODULES', $modules);    
 
