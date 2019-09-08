@@ -47,71 +47,49 @@ function CreateEnvironmentVariable($envName, $value)
     return($en);
 }
 
-function CreateCoreBuildSpec()
-{
-    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_core_framework.git',
-                           'master',
-                           ''); //Get latest 
-
-    $modules = [];
-    $m1 = CreateModule('onix_core_framework.phar', 'lib_wis_core_framework/build', 'system/bin');
-    array_push($modules, $m1);
-
-    $bs1->AddChildArray('MODULES', $modules);   
-    return($bs1);
-}
-
-function CreateErpBuildSpec()
-{
-    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/lib_wis_erp_framework.git',
-                           'master',
-                           ''); //Get latest 
-
-    $modules = [];
-    $m1 = CreateModule('onix_erp_framework.phar', 'lib_wis_erp_framework/build', 'system/bin');
-    array_push($modules, $m1);
-
-    $bs1->AddChildArray('MODULES', $modules);   
-    return($bs1);
-}
-
 function CreateAppBuildSpec()
 {
-    $bs1 = CreateBuildSpec('https://pjamenaja@bitbucket.org/pjamenaja/app_onix.git',
-                           'master',
-                           ''); //Get latest
-//ONIX_1.0.3
+    $bs1 = CreateBuildSpec('https://github.com/pjamenaja/onixlegacy.git',
+                           'trunk',
+                           'trunk'); //Get latest
 
     $modules = [];
 
-    $m1 = CreateModule('config.php', 'app_onix/onix_server/scripts', 'system/bin');
+    $mb = CreateModule('onix_core_framework.phar', 'onixlegacy/lib_wis_core_framework/build', 'system/bin');
+    array_push($modules, $mb);
+
+    $ma = CreateModule('onix_erp_framework.phar', 'onixlegacy/lib_wis_erp_framework/build', 'system/bin');
+    array_push($modules, $ma);
+
+    $m1 = CreateModule('config.php', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m1);
 
-    $m2 = CreateModule('dispatcher.php', 'app_onix/onix_server/scripts', 'system/bin');
+    $m2 = CreateModule('dispatcher.php', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m2);
 
-    $m3 = CreateModule('downloader.php', 'app_onix/onix_server/scripts', 'system/bin');
+    $m3 = CreateModule('downloader.php', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m3);
 
-    $ma_1 = CreateModule('content.php', 'app_onix/onix_server/scripts', 'system/bin');
+    $ma_1 = CreateModule('content.php', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $ma_1);
 
-    $ma_2 = CreateModule('uploader.php', 'app_onix/onix_server/scripts', 'system/bin');
+    $ma_2 = CreateModule('uploader.php', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $ma_2);
 
-    $m4_1 = CreateModule('build.php', 'app_onix/onix_server/scripts', 'system/bin');
+    $m4_1 = CreateModule('build.php', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4_1);
 
-    $m4_2 = CreateModule('init_script.bash', 'app_onix/onix_server/scripts', 'system/bin');
+    $m4_2 = CreateModule('init_script.bash', 'onixlegacy/app_onix/onix_server/scripts', 'system/bin');
     array_push($modules, $m4_2);
 
-    $m5 = CreateModule('OnixCenter.zip', 'app_onix', 'windows');
+    $m5 = CreateModule('OnixCenter.zip', 'onixlegacy/app_onix', 'windows');
     array_push($modules, $m5);
 
     $bs1->AddChildArray('MODULES', $modules);    
 
     $scripts = [];
-    $s1 = CreateScript('php ./app_onix/onix.build.php onix');
+
+    $s1 = CreateScript('php ./onixlegacy/app_onix/onix.build.php onix');
     array_push($scripts, $s1);
     $bs1->AddChildArray('SCRIPTS', $scripts);  
 
@@ -123,13 +101,7 @@ function CreateBuildProfile()
     $bp = new CTable("BUILD_PROFILE");
     $bp->SetFieldValue('APP_VERSION_LABEL', 'ONIX_ERP_1.0.1');
 
-    $bspecs = [];
-    
-    $bs1 = CreateCoreBuildSpec();
-    array_push($bspecs, $bs1);
-
-    $bs2 = CreateErpBuildSpec();
-    array_push($bspecs, $bs2);
+    $bspecs = [];    
 
     $bs3 = CreateAppBuildSpec();
     array_push($bspecs, $bs3);
